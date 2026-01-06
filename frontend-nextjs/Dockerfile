@@ -13,6 +13,12 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Generate placeholder images if they don't exist
+RUN mkdir -p public/images && \
+    if [ ! -f public/images/vanilla.svg ]; then \
+      node scripts/create-browser-placeholders.js; \
+    fi
+
 # Build Next.js (skip linting for speed)
 RUN npm run build -- --no-lint
 

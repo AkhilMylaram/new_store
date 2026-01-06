@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { useCartStore } from '@/store/cart'
 import { toast } from 'react-toastify'
 
@@ -24,13 +23,10 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="card overflow-hidden flex flex-col">
       <div className="aspect-square relative bg-gradient-to-br from-pink-100 to-purple-100 overflow-hidden">
-        <Image
+        <img
           src={product.image}
           alt={product.name}
-          fill
-          className="object-cover hover:scale-105 transition-transform duration-300"
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          unoptimized={true}
+          className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
         />
       </div>
       <div className="p-4 flex-1 flex flex-col">

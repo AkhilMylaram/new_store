@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 export function IceCreamHero() {
   return (
@@ -22,13 +21,10 @@ export function IceCreamHero() {
       </div>
       <div className="relative">
         <div className="aspect-square rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200">
-          <Image
-            src="/images/hero-icecream.jpg"
+          <img
+            src="/images/hero-icecream.svg"
             alt="Premium ice cream scoop"
-            fill
-            className="object-cover"
-            priority
-            unoptimized={true}
+            className="w-full h-full object-cover"
           />
         </div>
       </div>
