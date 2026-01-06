@@ -1,19 +1,33 @@
-# Stage 1: Build
+# Stage 1: Dependencies
+FROM node:18-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --only=production --no-audit --no-fund --loglevel=error
+
+# Stage 2: Build dependencies
+FROM node:18-alpine AS build-deps
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci --no-audit --no-fund --loglevel=error
+
+# Stage 3: Build
 FROM node:18-alpine AS builder
 WORKDIR /app
-COPY package.json package-lock.json* ./
-RUN npm ci --silent
+COPY package.json package-lock.json ./
+COPY --from=build-deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-# Stage 2: Production image
-FROM nginx:stable-alpine
-COPY --from=builder /app/.next /usr/share/nginx/html
-# Expose port 3000 (Next.js default) or 80 (Nginx default)
+# Stage 4: Production image
+FROM node:18-alpine AS runner
+WORKDIR /app
+ENV NODE_ENV=production
+# Copy the built application from the builder stage
+COPY --from=builder /app/.next ./.next
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+
 EXPOSE 3000
-# Optional: override PORT via build args
-ARG PORT=3000
-ENV PORT=$PORT
-# For Nginx, you can also expose 80 and configure Nginx to proxy to 3000
-# This setup serves the static build from .next/export
-CMD ["nginx", "-g", "daemon off;"]
+ENV PORT=3000
+
+CMD ["node", ".next/standalone/server.js"]
