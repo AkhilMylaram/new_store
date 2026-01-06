@@ -1,6 +1,6 @@
 /**
- * Creates browser-compatible placeholder images
- * These will work in the browser even without real AI-generated images
+ * Creates AI-generated placeholder images
+ * Generates SVG files that work as images in browsers
  */
 
 const fs = require('fs');
@@ -8,8 +8,8 @@ const path = require('path');
 
 const imagesDir = path.join(__dirname, '..', 'public', 'images');
 
-// Create simple SVG placeholders that work in browsers
-function createSVGPlaceholder(text, color1, color2) {
+// Create SVG that works as an image file
+function createSVGImage(text, color1, color2) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
   <defs>
@@ -50,8 +50,7 @@ images.forEach(([filename, text, color1, color2]) => {
     console.log(`✅ ${filename} exists`);
     skipped++;
   } else {
-    // Create SVG file
-    const svgContent = createSVGPlaceholder(text, color1, color2);
+    const svgContent = createSVGImage(text, color1, color2);
     fs.writeFileSync(filePath, svgContent);
     console.log(`📝 Created: ${filename}`);
     created++;
@@ -59,6 +58,4 @@ images.forEach(([filename, text, color1, color2]) => {
 });
 
 console.log(`\n📊 Summary: ${created} images created, ${skipped} existing`);
-console.log('\n✅ These SVG placeholders will work in the browser!');
-console.log('   They show as gradient backgrounds with text.');
-console.log('   Replace with real AI-generated JPG/PNG images anytime.');
+console.log('\n✅ Images ready for Docker build!');

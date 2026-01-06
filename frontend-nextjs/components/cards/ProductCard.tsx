@@ -24,25 +24,14 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="card overflow-hidden flex flex-col">
       <div className="aspect-square relative bg-gradient-to-br from-pink-100 to-purple-100 overflow-hidden">
-        {product.image && (
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            className="object-cover hover:scale-105 transition-transform duration-300"
-            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-            unoptimized={true}
-            onError={(e) => {
-              // Hide broken image, keep gradient background
-              e.currentTarget.style.display = 'none';
-            }}
-          />
-        )}
-        {!product.image && (
-          <div className="absolute inset-0 flex items-center justify-center text-4xl opacity-50">
-            🍦
-          </div>
-        )}
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="object-cover hover:scale-105 transition-transform duration-300"
+          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+          unoptimized={true}
+        />
       </div>
       <div className="p-4 flex-1 flex flex-col">
         <h3 className="font-semibold text-lg">{product.name}</h3>
