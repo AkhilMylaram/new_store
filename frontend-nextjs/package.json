@@ -1,0 +1,32 @@
+{
+  "name": "icecream-store-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "zustand": "^4.4.0",
+    "@tanstack/react-query": "^4.34.0",
+    "zod": "^4.20.0",
+    "framer-motion": "^8.0.0",
+    "react-toastify": "^9.2.0",
+    "classnames": "^2.3.2"
+  },
+  "devDependencies": {
+    "typescript": "latest",
+    "tailwindcss": "latest",
+    "postcss": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "prettier": "latest",
+    "eslint-config-next": "latest"
+  }
+}
