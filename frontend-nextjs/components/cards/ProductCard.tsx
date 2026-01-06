@@ -24,18 +24,20 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <div className="card overflow-hidden flex flex-col">
       <div className="aspect-square relative bg-gradient-to-br from-pink-100 to-purple-100">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          onError={(e) => {
-            // If image fails to load, keep the gradient background
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-          }}
-        />
+        {product.image && (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            unoptimized={true}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        )}
       </div>
       <div className="p-4 flex-1 flex flex-col">
         <h3 className="font-semibold text-lg">{product.name}</h3>

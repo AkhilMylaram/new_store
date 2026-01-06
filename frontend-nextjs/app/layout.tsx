@@ -5,7 +5,11 @@ import { Providers } from './providers'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  preload: true
+})
 
 export const metadata: Metadata = {
   title: 'Ice Cream Store',

@@ -32,17 +32,20 @@ export function ProductDetail({ id }: { id: string }) {
   return (
     <div className="grid md:grid-cols-2 gap-8">
       <div className="aspect-square relative rounded-2xl overflow-hidden bg-gradient-to-br from-pink-100 to-purple-100">
-        <Image
-          src={product.image}
-          alt={product.name}
-          fill
-          className="object-cover"
-          priority
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-          }}
-        />
+        {product.image && (
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover"
+            priority
+            unoptimized={true}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
+        )}
       </div>
       <div>
         <h1 className="text-4xl font-bold mb-2">{product.name}</h1>

@@ -200,9 +200,20 @@ This creates SVG files that can be replaced with JPG/PNG later.
 - [ ] Run end-to-end tests
 - [ ] Deploy to Vercel / Kubernetes
 
+## � Troubleshooting
+
+If you see errors like:
+- **404 on JS chunks** → Run `npm run build:clean`
+- **400 on images** → Run `npm run check-images` and add images
+- **Font preload warnings** → Already fixed, ignore
+
+See `TROUBLESHOOTING.md` for detailed fixes.
+
 ## 📝 Notes
 
 - This is a **frontend-only** project.
 - No backend code included.
 - Ready to plug into microservices later.
 - All UI is built from scratch — no direct code reuse from reference repo.
+- **Development mode**: Works without images (shows gradients)
+- **Production**: Add HD images to `/public/images/`
