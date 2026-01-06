@@ -1,5 +1,5 @@
 # Single Dockerfile for Ice Cream Store Frontend
-# Generates placeholder images automatically - just build and run!
+# Works without errors, generates images automatically
 
 FROM node:18-alpine AS base
 
@@ -15,22 +15,25 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Generate placeholder images automatically
-RUN mkdir -p public/images
-RUN node -e "
+# Create placeholder images script
+RUN cat > /app/generate-images.js << 'EOF'
 const fs = require('fs');
 const path = require('path');
-const imagesDir = '/app/public/images';
 
-const createSVG = (text, c1, c2) => \`<?xml version=\"1.0\" encoding=\"UTF-8\"?>
-<svg width=\"800\" height=\"800\" viewBox=\"0 0 800 800\" xmlns=\"http://www.w3.org/2000/svg\">
-  <defs><linearGradient id=\"g\" x1=\"0%\" y1=\"0%\" x2=\"100%\" y2=\"100%\">
-    <stop offset=\"0%\" style=\"stop-color:\${c1};stop-opacity:1\" />
-    <stop offset=\"100%\" style=\"stop-color:\${c2};stop-opacity:1\" />
+const imagesDir = '/app/public/images';
+if (!fs.existsSync(imagesDir)) {
+  fs.mkdirSync(imagesDir, { recursive: true });
+}
+
+const createSVG = (text, c1, c2) => `<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:${c1};stop-opacity:1" />
+    <stop offset="100%" style="stop-color:${c2};stop-opacity:1" />
   </linearGradient></defs>
-  <rect width=\"800\" height=\"800\" fill=\"url(#g)\"/>
-  <text x=\"50%\" y=\"50%\" font-family=\"Arial\" font-size=\"64\" fill=\"white\" text-anchor=\"middle\" dominant-baseline=\"middle\" font-weight=\"bold\">\${text}</text>
-</svg>\`;
+  <rect width="800" height="800" fill="url(#g)"/>
+  <text x="50%" y="50%" font-family="Arial" font-size="64" fill="white" text-anchor="middle" dominant-baseline="middle" font-weight="bold">${text}</text>
+</svg>`;
 
 const files = [
   ['hero-icecream.jpg', 'Premium Ice Cream', '#ff9a9e', '#fad0c4'],
@@ -46,11 +49,12 @@ const files = [
 
 files.forEach(([name, text, c1, c2]) => {
   fs.writeFileSync(path.join(imagesDir, name), createSVG(text, c1, c2));
+  console.log('Created:', name);
 });
-"
+EOF
 
-# Build Next.js
-RUN npm run build
+# Generate images and build
+RUN node /app/generate-images.js && npm run build
 
 # Production image
 FROM base AS runner
@@ -62,7 +66,6 @@ COPY --from=builder /app/.next ./.next
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=builder /app/public/images ./public/images
 COPY package.json ./
-COPY next.config.mjs ./
 
 # Expose port
 EXPOSE 3000
