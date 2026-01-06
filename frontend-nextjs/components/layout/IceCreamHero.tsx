@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export function IceCreamHero() {
   return (
@@ -20,8 +21,18 @@ export function IceCreamHero() {
         </div>
       </div>
       <div className="relative">
-        <div className="aspect-square rounded-2xl bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200 shadow-lg flex items-center justify-center">
-          <span className="text-6xl">🍦</span>
+        <div className="aspect-square rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-pink-200 via-purple-200 to-blue-200">
+          <Image
+            src="/images/hero-icecream.jpg"
+            alt="Premium ice cream scoop"
+            fill
+            className="object-cover"
+            priority
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+            }}
+          />
         </div>
       </div>
     </section>

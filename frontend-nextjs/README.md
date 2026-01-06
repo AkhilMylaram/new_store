@@ -52,20 +52,37 @@ frontend-nextjs/
    npm install
    ```
 
-2. **Environment variables**:
-   Copy `.env.local.example` to `.env.local` and update values if needed:
+2. **Setup Images** (IMPORTANT):
+   ```bash
+   # Check for missing images
+   npm run check-images
+   
+   # Generate placeholder SVGs (temporary)
+   node scripts/create-placeholders.js
+   
+   # Get AI prompts for HD images
+   cat scripts/generate-images.md
+   ```
+   
+   **Required images in `/public/images/`:**
+   - `hero-icecream.jpg` (Hero section)
+   - `vanilla.jpg`, `chocolate.jpg`, `strawberry.jpg`, `mint.jpg`
+   - `caramel.jpg`, `cookies.jpg`, `pistachio.jpg`, `mango.jpg`
+
+3. **Environment variables**:
+   Copy `.env.local.example` to `.env.local`:
    ```bash
    cp .env.local.example .env.local
    ```
 
-3. **Run development server**:
+4. **Run development server**:
    ```bash
    npm run dev
    ```
 
    The app will run on **http://localhost:3000** by default.
 
-   To use a different port, set the `PORT` environment variable:
+   To use a different port:
    ```bash
    PORT=3001 npm run dev
    ```
@@ -102,6 +119,33 @@ The Dockerfile is multi-stage and optimized for container orchestration. You can
 - Set `NEXT_PUBLIC_API_BASE_URL` in `.env.local` to point to your backend.
 - Mock responses are provided for development without a backend.
 
+## 🖼️ Image Handling
+
+### Graceful Fallbacks
+All components use **Next.js Image** with automatic fallbacks:
+- If an image is missing, the app shows a gradient background
+- No broken images or errors in the console
+- Works perfectly for development without images
+
+### Setup HD Images
+1. **Generate AI images** using prompts in `scripts/generate-images.md`
+2. **Place them** in `/public/images/` with exact filenames
+3. **Run check**: `npm run check-images`
+
+### Using Remote URLs
+Update image paths in components to use CDN URLs:
+```tsx
+{ id: 1, name: 'Vanilla Dream', price: 4.99, image: 'https://your-cdn.com/vanilla.jpg', ... }
+```
+
+### Temporary Placeholders
+```bash
+# Create SVG placeholders
+node scripts/create-placeholders.js
+```
+
+This creates SVG files that can be replaced with JPG/PNG later.
+
 ## 📱 Responsive Design
 
 - **Mobile-first**: All layouts start from mobile and scale up.
@@ -131,9 +175,14 @@ The Dockerfile is multi-stage and optimized for container orchestration. You can
 
 ## 🎨 Images & Assets
 
-- Place AI-generated ice cream images in `/public/images`.
-- Use premium prompts like:
-  > "Ultra realistic scoop of vanilla ice cream, studio lighting, premium food photography, 4K"
+- **All images are now configured for HD AI generation**
+- Place generated images in `/public/images/` with exact filenames:
+  - `hero-icecream.jpg` (Hero section)
+  - `vanilla.jpg`, `chocolate.jpg`, `strawberry.jpg`, `mint.jpg`
+  - `caramel.jpg`, `cookies.jpg`, `pistachio.jpg`, `mango.jpg`
+- **Detailed prompts**: See `scripts/generate-images.md` for exact AI prompts
+- **Recommended specs**: 2048x2048px, 4K quality, studio lighting
+- **Alternative**: Use remote URLs by updating image paths in components
 
 ## 🔐 Environment Variables
 
