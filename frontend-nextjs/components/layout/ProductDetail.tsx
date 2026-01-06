@@ -38,10 +38,6 @@ export function ProductDetail({ id }: { id: string }) {
           fill
           className="object-cover"
           priority
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-          }}
         />
       </div>
       <div>

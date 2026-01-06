@@ -30,11 +30,6 @@ export function ProductCard({ product }: { product: Product }) {
           fill
           className="object-cover"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          onError={(e) => {
-            // If image fails to load, keep the gradient background
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-          }}
         />
       </div>
       <div className="p-4 flex-1 flex flex-col">

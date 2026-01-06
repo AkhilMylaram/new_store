@@ -28,10 +28,6 @@ export function IceCreamHero() {
             fill
             className="object-cover"
             priority
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-            }}
           />
         </div>
       </div>
