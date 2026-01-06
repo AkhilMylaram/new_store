@@ -29,7 +29,14 @@ export function IceCreamHero() {
             className="object-cover"
             priority
             unoptimized={true}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
           />
+          {/* Fallback if image is missing */}
+          <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-30">
+            🍦
+          </div>
         </div>
       </div>
     </section>

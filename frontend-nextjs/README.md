@@ -173,16 +173,45 @@ This creates SVG files that can be replaced with JPG/PNG later.
 - `/admin/inventory` – Inventory view
 - `/admin/orders` – Orders dashboard
 
-## 🎨 Images & Assets
+## 🎨 Images & AI Generation
 
-- **All images are now configured for HD AI generation**
-- Place generated images in `/public/images/` with exact filenames:
-  - `hero-icecream.jpg` (Hero section)
-  - `vanilla.jpg`, `chocolate.jpg`, `strawberry.jpg`, `mint.jpg`
-  - `caramel.jpg`, `cookies.jpg`, `pistachio.jpg`, `mango.jpg`
-- **Detailed prompts**: See `scripts/generate-images.md` for exact AI prompts
-- **Recommended specs**: 2048x2048px, 4K quality, studio lighting
-- **Alternative**: Use remote URLs by updating image paths in components
+### **Quick Setup (Get Images in Browser Immediately)**
+```bash
+# Generate SVG placeholders that work in browser
+npm run placeholders
+
+# Check what's missing
+npm run check-images
+```
+
+### **How to Get AI-Generated Images**
+
+1. **Generate placeholders first** (works immediately):
+   ```bash
+   npm run placeholders
+   ```
+
+2. **Get AI prompts** from `scripts/generate-images.md`
+
+3. **Generate real images** using DALL-E, Midjourney, etc.
+
+4. **Save to** `/public/images/` with exact names:
+   - `hero-icecream.jpg` (Hero section)
+   - `vanilla.jpg`, `chocolate.jpg`, `strawberry.jpg`, `mint.jpg`
+   - `caramel.jpg`, `cookies.jpg`, `pistachio.jpg`, `mango.jpg`
+
+5. **Rebuild Docker**:
+   ```bash
+   docker build -t icecream-store-frontend .
+   docker run -p 3000:3000 icecream-store-frontend
+   ```
+
+### **Image Behavior**
+- ✅ **Without images**: Shows gradient backgrounds + 🍦 emoji
+- ✅ **With SVG placeholders**: Shows gradients with text labels
+- ✅ **With AI images**: Shows premium ice cream photos
+
+**See `IMAGES_COMPLETE.md` for detailed guide.**
 
 ## 🔐 Environment Variables
 

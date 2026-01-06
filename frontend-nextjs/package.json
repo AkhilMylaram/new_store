@@ -13,7 +13,8 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
-    "check-images": "node -e \"const fs=require('fs');const path=require('path');const images=['hero-icecream.jpg','vanilla.jpg','chocolate.jpg','strawberry.jpg','mint.jpg','caramel.jpg','cookies.jpg','pistachio.jpg','mango.jpg'];const missing=images.filter(img=>!fs.existsSync(path.join('public','images',img)));if(missing.length){console.log('❌ Missing images:',missing.join(', '));console.log('Run: npm run gen-images');}else{console.log('✅ All images present');}\"",
+    "check-images": "node -e \"const fs=require('fs');const path=require('path');const images=['hero-icecream.jpg','vanilla.jpg','chocolate.jpg','strawberry.jpg','mint.jpg','caramel.jpg','cookies.jpg','pistachio.jpg','mango.jpg'];const missing=images.filter(img=>!fs.existsSync(path.join('public','images',img)));if(missing.length){console.log('❌ Missing images:',missing.join(', '));console.log('Run: npm run placeholders');}else{console.log('✅ All images present');}\"",
+    "placeholders": "node scripts/create-browser-placeholders.js",
     "gen-images": "echo \"See scripts/generate-images.md for AI prompts\"",
     "dev:debug": "NODE_OPTIONS='--inspect' next dev"
   },

@@ -40,7 +40,15 @@ export function ProductDetail({ id }: { id: string }) {
             className="object-cover"
             priority
             unoptimized={true}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+            }}
           />
+        )}
+        {!product.image && (
+          <div className="absolute inset-0 flex items-center justify-center text-6xl opacity-30">
+            🍦
+          </div>
         )}
       </div>
       <div>
