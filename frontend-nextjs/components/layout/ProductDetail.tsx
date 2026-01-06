@@ -40,10 +40,6 @@ export function ProductDetail({ id }: { id: string }) {
             className="object-cover"
             priority
             unoptimized={true}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.style.display = 'none';
-            }}
           />
         )}
       </div>

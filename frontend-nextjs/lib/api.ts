@@ -18,7 +18,7 @@ export async function fetchProductById(id: string) {
   return { id: Number(id), name: 'Sample Product', price: 5.99 }
 }
 
-export async function createOrder(data: any) {
+export async function createOrder(_data: any) {
   // Mock response
   return { id: 'ORD-' + Math.floor(Math.random() * 10000), status: 'processing' }
 }

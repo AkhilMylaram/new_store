@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { IceCreamHero } from '@/components/layout/IceCreamHero'
 import { ProductGrid } from '@/components/layout/ProductGrid'
 
